@@ -1,12 +1,20 @@
-exports.getProducts = (req, res, next) => {
-  const products = [
-    { id: 1, name: "Product A", price: 100 },
-    { id: 2, name: "Product B", price: 150 },
-    { id: 3, name: "Product C", price: 200 },
-  ];
-  res.json({ message: "Get all products" });
+const producrtModel = require("../model/productModel");
+
+//get all products api - api/v1/products
+exports.getProducts = async (req, res, next) => {
+  const products = await producrtModel.find({});
+
+  res.json({
+    success: true,
+    products,
+  });
 };
 
-exports.getSingleProduct = (req, res, next) => {
-  res.json({ message: `Get product with ID ${req.params.id}` });
+//get single product - api/v1/products/:id
+exports.getSingleProduct = async (req, res, next) => {
+  const product = await producrtModel.findById(req.params.id);
+  res.json({
+    success: true,
+    product,
+  });
 };
